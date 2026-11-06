@@ -1,0 +1,3 @@
+{
+    JWT_KEY:PROCESS.ENV.JWT_KEY;
+}
