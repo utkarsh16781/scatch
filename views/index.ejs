@@ -1,0 +1,38 @@
+<%- include("partials/header") %>
+
+<section class="welcome">
+  <div class="welcome-copy">
+    <h1>Pick it, add it, done.</h1>
+    <p>Create an account to browse the collection and keep a cart. Already have one? Log in on the right.</p>
+  </div>
+
+  <div class="welcome-forms">
+    <form class="panel" action="/users/register" method="post">
+      <h2>Create account</h2>
+      <label>Full name
+        <input type="text" name="fullname" autocomplete="name" required>
+      </label>
+      <label>Email
+        <input type="email" name="email" autocomplete="email" required>
+      </label>
+      <label>Password
+        <input type="password" name="password" minlength="6" autocomplete="new-password" required>
+        <small>At least 6 characters</small>
+      </label>
+      <button class="btn" type="submit">Create account</button>
+    </form>
+
+    <form class="panel" action="/users/login" method="post">
+      <h2>Log in</h2>
+      <label>Email
+        <input type="email" name="email" autocomplete="email" required>
+      </label>
+      <label>Password
+        <input type="password" name="password" autocomplete="current-password" required>
+      </label>
+      <button class="btn" type="submit">Log in</button>
+    </form>
+  </div>
+</section>
+
+<%- include("partials/footer") %>

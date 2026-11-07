@@ -1,0 +1,67 @@
+<%- include("partials/header") %>
+
+<div class="page-head">
+  <h1>Owner panel</h1>
+  <p>Signed in as <%= owner.fullname %></p>
+</div>
+
+<div class="admin">
+  <form class="panel" action="/products/create" method="post" enctype="multipart/form-data">
+    <h2>Add product</h2>
+    <label>Image
+      <input type="file" name="image" accept="image/jpeg,image/png,image/webp,image/gif">
+      <small>JPG, PNG, WEBP or GIF, up to 2 MB</small>
+    </label>
+    <label>Name
+      <input type="text" name="name" required>
+    </label>
+    <div class="two">
+      <label>Price (₹)
+        <input type="number" name="price" min="1" step="1" required>
+      </label>
+      <label>Discount (₹)
+        <input type="number" name="discount" min="0" step="1" value="0">
+      </label>
+    </div>
+    <div class="three">
+      <label>Image background
+        <input type="color" name="bgcolor" value="#dfe3e8">
+      </label>
+      <label>Panel
+        <input type="color" name="panelcolor" value="#ffffff">
+      </label>
+      <label>Text
+        <input type="color" name="textcolor" value="#15191e">
+      </label>
+    </div>
+    <button class="btn" type="submit">Create product</button>
+  </form>
+
+  <section>
+    <h2>Products (<%= products.length %>)</h2>
+    <% if (products.length === 0) { %>
+      <div class="empty small">
+        <p>No products yet. Use the form to add the first one.</p>
+      </div>
+    <% } else { %>
+      <ul class="admin-list">
+        <% products.forEach(function (p) { %>
+          <li>
+            <div class="thumb" style="background: <%= p.bgcolor || '#dfe3e8' %>;">
+              <% if (p.image) { %><img src="<%= p.image %>" alt=""><% } %>
+            </div>
+            <div class="admin-info">
+              <strong><%= p.name %></strong>
+              <span>₹<%= p.price.toLocaleString("en-IN") %><% if (p.discount > 0) { %> with ₹<%= p.discount.toLocaleString("en-IN") %> off<% } %></span>
+            </div>
+            <form action="/products/delete/<%= p._id %>" method="post">
+              <button class="btn danger small" type="submit">Delete</button>
+            </form>
+          </li>
+        <% }) %>
+      </ul>
+    <% } %>
+  </section>
+</div>
+
+<%- include("partials/footer") %>

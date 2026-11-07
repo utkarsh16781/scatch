@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= typeof title !== "undefined" ? title + " - Scatch" : "Scatch" %></title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/">Scatch</a>
+    <nav aria-label="Main">
+      <% if (loggedIn) { %>
+        <a href="/shop">Shop</a>
+        <a href="/cart">Cart</a>
+        <form action="/users/logout" method="post"><button class="linklike" type="submit">Log out</button></form>
+      <% } %>
+      <% if (ownerLoggedIn) { %>
+        <a href="/owners/admin">Owner panel</a>
+        <form action="/owners/logout" method="post"><button class="linklike" type="submit">Owner log out</button></form>
+      <% } %>
+    </nav>
+  </header>
+  <% if (error) { %><div class="notice error" role="alert"><%= error %></div><% } %>
+  <% if (success) { %><div class="notice ok" role="status"><%= success %></div><% } %>
+  <main>

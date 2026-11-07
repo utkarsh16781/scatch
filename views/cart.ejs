@@ -1,0 +1,54 @@
+<%- include("partials/header") %>
+
+<div class="page-head">
+  <h1>Your cart</h1>
+</div>
+
+<% if (items.length === 0) { %>
+  <div class="empty">
+    <h2>Your cart is empty</h2>
+    <p>Add something from the shop and it will show up here.</p>
+    <a class="btn" href="/shop">Go to shop</a>
+  </div>
+<% } else { %>
+  <div class="cart">
+    <ul class="cart-list">
+      <% items.forEach(function (item) { %>
+        <% var p = item.product; %>
+        <li class="cart-row">
+          <div class="thumb" style="background: <%= p.bgcolor || '#dfe3e8' %>;">
+            <% if (p.image) { %><img src="<%= p.image %>" alt=""><% } %>
+          </div>
+          <div class="cart-info">
+            <h2><%= p.name %></h2>
+            <p>₹<%= (p.price - (p.discount || 0)).toLocaleString("en-IN") %> each</p>
+            <form action="/cart/remove/<%= p._id %>" method="post">
+              <button class="linklike" type="submit">Remove</button>
+            </form>
+          </div>
+          <div class="qty" role="group" aria-label="Quantity for <%= p.name %>">
+            <form action="/cart/decrease/<%= p._id %>" method="post">
+              <button class="round small" type="submit" aria-label="Decrease quantity">−</button>
+            </form>
+            <span><%= item.quantity %></span>
+            <form action="/cart/add/<%= p._id %>" method="post">
+              <button class="round small" type="submit" aria-label="Increase quantity">+</button>
+            </form>
+          </div>
+          <p class="line-total">₹<%= ((p.price - (p.discount || 0)) * item.quantity).toLocaleString("en-IN") %></p>
+        </li>
+      <% }) %>
+    </ul>
+
+    <aside class="summary panel">
+      <h2>Bill</h2>
+      <dl>
+        <dt>Price</dt><dd>₹<%= mrp.toLocaleString("en-IN") %></dd>
+        <dt>Discount</dt><dd>−₹<%= discount.toLocaleString("en-IN") %></dd>
+        <dt class="total">Total</dt><dd class="total">₹<%= total.toLocaleString("en-IN") %></dd>
+      </dl>
+    </aside>
+  </div>
+<% } %>
+
+<%- include("partials/footer") %>
